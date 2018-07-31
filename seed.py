@@ -51,6 +51,9 @@ def load_movies():
         movie_id, title, released_at = movie_info[:3]
         imdb_url = movie_info[4]
 
+        # File data is in 'latin-1' encoding, turn into Unicode
+        title = title.decode("latin-1")
+
         # change released_at to a datetime object
         datetime_obj = datetime.strptime(released_at, "%d-%b-%Y")
 
