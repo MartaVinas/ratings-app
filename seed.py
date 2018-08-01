@@ -54,9 +54,6 @@ def load_movies():
         # remove "(year)" from title
         title = title.split("(")[0].rstrip()
 
-        # File data is in 'latin-1' encoding, turn into Unicode
-        #title = title.decode("latin-1")
-
         # change released_at to a datetime object
         datetime_obj = datetime.strptime(released_at, "%d-%b-%Y")
 
