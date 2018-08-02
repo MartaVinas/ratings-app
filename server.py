@@ -43,9 +43,21 @@ def register_form():
 def process_form():
     """Process user registration information."""
 
-    # PROCESS DATA HERE
+    # get user name and email from POST request
 
-    return redirect("/")
+    email = request.form.get("user_email")
+    password = request.form.get("user_pass")
+
+    if db.session.query(User).filter(User.email == email).first():
+        # email does exist; send them to log in page
+        flash("You already have an account.")
+        return redirect("/")
+    else:
+        # email not in db yet; create new user in database
+        db.session.add(User(email=email, password=password))
+        db.session.commit()
+        flash("Your account has been created.")
+        return redirect("/")
 
 
 if __name__ == "__main__":
