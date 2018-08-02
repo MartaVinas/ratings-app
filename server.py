@@ -33,6 +33,21 @@ def user_list():
     return render_template("user_list.html", users=users)
 
 
+@app.route('/register', methods=["GET"])
+def register_form():
+    """Show registration form."""
+    return render_template("register_form.html")
+
+
+@app.route('/register-process', methods=["POST"])
+def process_form():
+    """Process user registration information."""
+
+    # PROCESS DATA HERE
+
+    return redirect("/")
+
+
 if __name__ == "__main__":
     # We have to set debug=True here, since it has to be True at the
     # point that we invoke the DebugToolbarExtension
