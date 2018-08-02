@@ -7,7 +7,11 @@
     {% for user in users %}
       <li>
         <a href="/users/{{ user.user_id }}">
-          {{ user.email }} ({{ user.user_id }})
+          {% if user.email == None %}
+            No email on file ({{ user.user_id }})
+          {% else %}
+            {{ user.email }} ({{ user.user_id }})
+          {% endif %}
         </a>
       </li>
     {% endfor %}
