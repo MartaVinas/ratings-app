@@ -22,7 +22,8 @@ app.jinja_env.undefined = StrictUndefined
 @app.route('/')
 def index():
     """Homepage."""
-    return render_template("homepage.html")
+    print(session)
+    return render_template("homepage.html", current_session=session)
 
 
 @app.route('/users')
@@ -65,6 +66,7 @@ def show_login_form():
     """Show registration form."""
     return render_template("login_page.html")
 
+
 @app.route('/login-process', methods=["POST"])
 def process_login():
     """Login the user"""
@@ -79,6 +81,13 @@ def process_login():
     # redirect to the homepage and give a flash message saying they are logged in
     flash("You are logged now")
     return redirect("/")
+
+
+@app.route('/log-out')
+def log_out():
+    session.clear()
+    return redirect("/")
+
 
 if __name__ == "__main__":
     # We have to set debug=True here, since it has to be True at the
