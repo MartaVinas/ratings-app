@@ -51,7 +51,7 @@ def process_form():
     if db.session.query(User).filter(User.email == email).first():
         # email does exist; send them to log in page
         flash("You already have an account.")
-        return redirect("/")
+        return redirect("/login-page")
     else:
         # email not in db yet; create new user in database
         db.session.add(User(email=email, password=password))
@@ -59,6 +59,26 @@ def process_form():
         flash("Your account has been created.")
         return redirect("/")
 
+
+@app.route('/login-page', methods=["GET"])
+def show_login_form():
+    """Show registration form."""
+    return render_template("login_page.html")
+
+@app.route('/login-process', methods=["POST"])
+def process_login():
+    """Login the user"""
+
+    # get the user's id using the email (ask the db)
+    email = request.form.get("user_email")
+    user = db.session.query(User).filter(User.email == email).first()
+
+    # add the userid to the flask session
+    session['userid'] = user.user_id
+
+    # redirect to the homepage and give a flash message saying they are logged in
+    flash("You are logged now")
+    return redirect("/")
 
 if __name__ == "__main__":
     # We have to set debug=True here, since it has to be True at the
